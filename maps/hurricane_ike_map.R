@@ -1,5 +1,6 @@
 library(sp)
 library(rgdal)
+library(raster)
 
 setwd("C://Users/kmeierdiercks/Google\ Drive/Projects/Coastal_Wetlands_Hurricane/GIS/Data")
 
@@ -16,12 +17,27 @@ counties15n <- readOGR(
   layer = "counties_UTM15N"
 )
 
-wetlands15n <- readOGR(
-  dsn = "Wetlands/TX_Wetlands_UTM15.shp",
-  layer = "TX_Wetlands_UTM15"
-)
+affected_counties <- subset(counties15n,GEOID %in% c("48071", "48167", "48039","48245", "01017", "48201", "13145"))
 
-plot(ike_track15n, col = "red", xlim = c(175500, 459200), ylim = c(3148867, 3398625))
+#LOADING WETLANDS SEEMS TO BE CRASHING r-STUDIO
+#wetlands15n <- readOGR(
+#  dsn = "Wetlands/TX_Wetlands_UTM15.shp",
+#  layer = "TX_Wetlands_UTM15"
+#)
+
+GDP15n <- raster("GDP_NighttimeSky/gdp_utm15")
+
+
+#plot(wetlands15n, col = "green", add = TRUE)
+plotxlim = c(175000,450000)
+plot(GDP15n, xlim = plotxlim, ylim = c(3148867, 3398625))
 plot(counties15n, add = TRUE)
-plot(wetlands15n, col = "green", add = TRUE)
+plot(affected_counties, xlim = plotxlim, border = "blue", lwd=1.8, add = TRUE)
+plot(ike_track15n, col = "red", lwd=3, add = TRUE)
+title("Hurricane Ike 2008")
+
+dev.copy(png,'Hurricane_Ike.png')
+dev.off()
+
+
 

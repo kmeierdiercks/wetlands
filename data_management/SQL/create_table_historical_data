@@ -1,0 +1,2 @@
+CREATE TABLE historical_data 
+(HURRICANE_NAME varchar, YEAR int, DAMAGE_DOLLARS money, MAX_WIND_KNOTS numeric(5,2), PRECIP_INCHES numeric(5,2), SURGE_METERS numeric(3,2), COSTANZA int);

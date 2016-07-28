@@ -1,0 +1,2 @@
+CREATE TABLE county
+(FIPS int, COUNTY varchar, STATE char(2), REGION varcar);
